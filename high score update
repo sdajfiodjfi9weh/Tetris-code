@@ -1,0 +1,85 @@
+package Tetris_Game;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+public class highScoreUpdate extends JFrame implements ActionListener {
+private static final long serialVersionUID = 1L;
+	
+	
+	private JButton retryBtn;
+	private JButton enterBtn;
+	
+	private JLabel popUp;
+	private JLabel nameEnter;
+	
+	private JTextField answer;
+	
+	private String str;
+	
+	public highScoreUpdate(){
+		
+		dispose();
+		
+		getContentPane().setBackground(new Color(0, 0, 0));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(750, 150, 500, 800);
+		getContentPane().setLayout(null);
+		setVisible(true);
+		
+		retryBtn = new JButton("Retry");
+		retryBtn.setFont(new Font("STHupo", Font.PLAIN, 30));
+		retryBtn.setBackground(new Color(240, 240, 240));
+		retryBtn.setBounds(150, 550, 200, 50);
+		retryBtn.addActionListener(this);
+		getContentPane().add(retryBtn);
+		
+		popUp = new JLabel("You got the High Score");
+		popUp.setForeground(new Color(255, 255, 255));
+		popUp.setFont(new Font("STHupo", Font.PLAIN, 20));
+		popUp.setBounds(150, 100, 300, 50);
+		getContentPane().add(popUp);
+	
+		
+		
+	}
+
+		@Override
+	public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+			if (e.getSource() == retryBtn) {
+				var game = new Tetris();
+	            game.setVisible(true);
+	            }
+			}
+
+				
+
+				
+	public String replaceName() {
+		
+		String str = getAnswer().getText();
+		return str;
+		
+	}
+
+	public JTextField getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(JTextField answer) {
+		this.answer = answer;
+	}
+}
