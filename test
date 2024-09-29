@@ -1,0 +1,151 @@
+package Tetris_Game;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.Color;
+import java.awt.Font;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+
+
+
+
+public class test extends JFrame implements ActionListener {
+
+
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * Launch the application.
+	 */
+
+
+	/**
+	 * Create the frame.
+	 */
+	private JButton startButton;
+	private JButton quitButton;
+	
+	private JTextField txtTetris;
+	private JLabel lblHighScore;
+	
+	public test() {
+		getContentPane().setBackground(new Color(0, 0, 0));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(750, 150, 500, 800);
+		getContentPane().setLayout(null);
+		
+		startButton = new JButton("Start Game");
+		startButton.setFont(new Font("STHupo", Font.PLAIN, 30));
+		startButton.setBackground(new Color(240, 240, 240));
+		startButton.setBounds(150, 550, 200, 50);
+		startButton.addActionListener(this);
+		getContentPane().add(startButton);
+		
+		txtTetris = new JTextField();
+		txtTetris.setBackground(new Color(0, 0, 0));
+		txtTetris.setForeground(new Color(255, 255, 255));
+		txtTetris.setFont(new Font("Cooper Black", Font.PLAIN, 40));
+		txtTetris.setHorizontalAlignment(SwingConstants.CENTER);
+		txtTetris.setText("TETRIS");
+		txtTetris.setBounds(95, 40, 300, 100);
+		getContentPane().add(txtTetris);
+		txtTetris.setColumns(10);
+		
+		quitButton = new JButton("Quit Game");
+		quitButton.setFont(new Font("STHupo", Font.PLAIN, 30));
+		quitButton.setBackground(new Color(240, 240, 240));
+		quitButton.setBounds(150, 650, 200, 50);
+		quitButton.addActionListener((event) -> System.exit(0));
+		getContentPane().add(quitButton);
+		
+		
+		lblHighScore = new JLabel(scoreDisplay());
+		lblHighScore.setForeground(new Color(255, 255, 255));
+		lblHighScore.setFont(new Font("STHupo", Font.PLAIN, 30));
+		lblHighScore.setBounds(160, 288, 200, 50);
+		getContentPane().add(lblHighScore);
+		
+		JLabel lblNewLabel = new JLabel("Current High Score");
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setFont(new Font("STHupo", Font.PLAIN, 30));
+		lblNewLabel.setBackground(new Color(255, 255, 255));
+		lblNewLabel.setBounds(130, 206, 260, 50);
+		getContentPane().add(lblNewLabel);
+		
+
+	}
+		
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource()== startButton) {
+			dispose();
+            var game = new Tetris();
+            game.setVisible(true);
+		
+	}
+}
+	public String scoreDisplay() {
+		int score1 = 0;
+		int score2 = 0;
+		String a = ",";
+		String name = "";
+		int scoreOrName = 0;
+		
+		try {
+			FileReader scoreList = new FileReader("scoreList.txt");
+			int scoreData = scoreList.read();
+			String scoreResult = "";
+			
+			while(scoreData != -1) {
+				
+				if (scoreData == a.charAt(0)) {
+					scoreData = scoreList.read();
+					scoreOrName++;
+					continue;
+				}
+				scoreResult +=(char)scoreData;
+				scoreData = scoreList.read();
+				
+				if (scoreOrName == 0 && scoreData == a.charAt(0)) {
+					
+					score1 = Integer.parseInt(scoreResult);
+					
+					if (score1 > score2)score2 = score1;
+					scoreResult = "";
+					
+				}
+				else if (scoreOrName == 1 && scoreData == a.charAt(0)) {
+					
+					name = scoreResult;
+					
+				}
+				
+				}
+			scoreList.close();
+			return score2 + "     " + name;
+			
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "";
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "";
+		}
+		
+		
+	}
+}
