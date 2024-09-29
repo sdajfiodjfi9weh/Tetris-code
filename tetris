@@ -1,0 +1,75 @@
+package Tetris_Game;
+
+import java.awt.BorderLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+/*
+Java Tetris game clone
+
+Author: Jan Bodnar
+Website: http://zetcode.com
+ */
+public class Tetris extends JFrame {
+
+    private JLabel statusbar;
+    private int numLives = 3;
+    private JLabel timerText;
+    private Long elapsedTime = (long) 1;
+    
+    public Tetris() {
+
+        initUI();
+        
+    }
+
+    private void initUI() {
+
+        timerText = new JLabel("Time"+ elapsedTime);
+        statusbar = new JLabel(" Lives: " + numLives);
+        add(statusbar, BorderLayout.SOUTH);
+        add(timerText, BorderLayout.NORTH);
+
+        var board = new Board(this);
+        add(board);
+        board.start();
+
+        setTitle("Tetris");
+        setSize(500, 1000);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+    }
+ // Add a method to update the status bar with the current number of lives
+    void updateStatusBar() {
+    	 statusbar.setText(" Lives: " + numLives);
+    }
+   
+    // Add a method to decrement the number of lives
+    void decrementLives() {
+        numLives--;
+    }
+
+    // Add a method to check if the player has remaining lives
+    boolean hasRemainingLives() {
+        return numLives > 0;
+    }
+
+    // Add a method to reset the number of lives
+    void resetLives() {
+        numLives = 3; // Set the desired number of lives
+    }
+
+    JLabel getStatusBar() {
+
+        return statusbar;
+    }
+
+    
+    JLabel getTimerText() {
+        return timerText;
+    }
+    
+    private static final long serialVersionUID = 1L;
+
+
+}
